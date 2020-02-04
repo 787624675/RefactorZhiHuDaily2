@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:id="@+id/news"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="120dp">
+    <View
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/news_text"
+        android:layout_weight="12"
+        android:layout_width="0dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="知乎日报知乎日报知乎日报知乎日报知乎日报"
+            android:textSize="15sp"
+            android:autoSizeMaxTextSize="15sp"
+            android:autoSizeMinTextSize="8sp"
+            android:autoSizeTextType="uniform"
+            android:textStyle="bold"
+            android:id="@+id/news_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:layout_weight="4"
+            android:id="@+id/news_hint"
+            android:text="知乎日报"
+            android:autoSizeMaxTextSize="15sp"
+            android:autoSizeMinTextSize="4sp"
+            android:autoSizeTextType="uniform"
+            android:textColor="#C0C0C0"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <View
+        android:layout_width="20dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+    <ImageView
+        android:layout_weight="0"
+        android:layout_gravity="center"
+        android:id="@+id/news_image"
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
+    <View
+        android:layout_width="20dp"
+        android:layout_height="match_parent"/>
+
+
+</LinearLayout>

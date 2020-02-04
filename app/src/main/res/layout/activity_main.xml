@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.activities.MainActivity">
+    <androidx.appcompat.widget.Toolbar
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/toolbar_top"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+
+        android:background="#FFFFFF"
+        >
+        <LinearLayout
+            android:id="@+id/line1"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:padding="@dimen/cardview_compat_inset_shadow"
+                android:paddingTop="@dimen/cardview_compat_inset_shadow"
+                android:paddingBottom="@dimen/cardview_compat_inset_shadow"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_weight="1"
+                android:layout_height="match_parent">
+
+
+                <TextView
+                    android:id="@+id/day"
+                    android:gravity="center"
+                    android:layout_gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:autoSizeMaxTextSize="20sp"
+                    android:autoSizeMinTextSize="10sp"
+                    android:autoSizeTextType="uniform"
+                    android:text="14"
+                    android:textStyle="bold"
+                    android:clickable="true"
+                    android:textSize="20sp"
+                     />
+
+                <TextView
+                    android:id="@+id/month"
+
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autoSizeMaxTextSize="15sp"
+                    android:autoSizeMinTextSize="4sp"
+                    android:textSize="8sp"
+                    android:autoSizeTextType="uniform"
+                    android:text="十一月"
+                    android:paddingBottom="@dimen/cardview_compat_inset_shadow"
+                     />
+
+            </LinearLayout>
+            <View
+
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:padding="@dimen/cardview_compat_inset_shadow"
+                android:background="#C0C0C0"
+                />
+            <View
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_weight="5"
+                android:id="@+id/shouye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="知乎日报"
+                android:layout_gravity="center"
+                android:gravity="left"
+                android:textColor="#000000"
+                android:autoSizeMaxTextSize="25sp"
+                android:autoSizeMinTextSize="8sp"
+                android:autoSizeTextType="uniform"
+                android:textStyle="bold"
+                android:textSize="25sp"
+                 />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_weight="3"
+                android:id="@+id/touxiang"
+                android:clickable="true"
+                android:src="@drawable/touxiang"
+                android:layout_gravity="center"
+                android:padding="@dimen/cardview_compat_inset_shadow"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:focusable="true"
+               />
+
+
+        </LinearLayout>
+
+
+    </androidx.appcompat.widget.Toolbar>
+<com.scwang.smartrefresh.layout.SmartRefreshLayout
+    android:id="@+id/refresh_layout"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+    app:srlPrimaryColor="#444444"
+    app:srlAccentColor="@android:color/white"
+    app:srlEnablePreviewInEditMode="true">
+    <com.scwang.smartrefresh.layout.header.ClassicsHeader
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</LinearLayout>
