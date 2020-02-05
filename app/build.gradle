@@ -73,6 +73,8 @@ dependencies {
 
     //recyclerviewDSL
     implementation 'cn.edu.twt.retrox:recyclerviewdsl:1.1.0' //the use display on the badge above
+    implementation 'com.jowanlfm.support:rvadapter:1.0.0'
+
 
     api 'com.trello:rxlifecycle:1.0'
     api 'com.trello:rxlifecycle-components:1.0'

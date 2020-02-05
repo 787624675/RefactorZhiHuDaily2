@@ -12,9 +12,10 @@ import cn.edu.twt.retrox.recyclerviewdsl.ItemAdapter
 import cn.edu.twt.retrox.recyclerviewdsl.ItemManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.R
+import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.News
+import com.zhihu.refactorzhihudaily.presenter.MainImplementation
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.getTodayNews
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.loadMoreItems
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.setListener
 import org.jetbrains.anko.find
 import java.util.*
@@ -55,15 +56,12 @@ class MainActivity : AppCompatActivity(){
         toolbar.setLayoutParams(paramsForToolbar)
         //recyclerview显示
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val mAdapter =  ItemAdapter(itemManager)
+        val mAdapter =  MultiItemAdapter(this,MainImplementation.remixList)
         recyclerView.adapter = mAdapter
         recyclerView.isFocusableInTouchMode = false
-        itemManager.autoRefresh {
-            loadMoreItems(recyclerView,itemManager,screenHeight)
-        }
         //设置各种监听器
-        setListener(smartRefreshLayout,recyclerView,itemManager,screenHeight)
+        setListener(smartRefreshLayout,recyclerView,mAdapter,screenHeight)
         //发送网络请求
-        getTodayNews(recyclerView,itemManager,screenHeight)
+        getTodayNews(recyclerView,mAdapter,screenHeight)
     }
 }

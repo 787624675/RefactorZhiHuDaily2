@@ -98,3 +98,4 @@ data class DetailedNews(
 )
 data class News(val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String) {
 }
+data class RemixItem(val list: MutableList<String>,val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String,val type: Int)

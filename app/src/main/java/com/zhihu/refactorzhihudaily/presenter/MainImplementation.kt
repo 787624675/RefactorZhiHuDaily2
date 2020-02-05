@@ -1,14 +1,16 @@
 package com.zhihu.refactorzhihudaily.presenter
 
 import androidx.recyclerview.widget.RecyclerView
-import cn.edu.twt.retrox.recyclerviewdsl.Item
 import cn.edu.twt.retrox.recyclerviewdsl.ItemManager
 import cn.edu.twt.retrox.recyclerviewdsl.withItems
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.BeforeNews
 import com.zhihu.refactorzhihudaily.model.News
+import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.model.RetrofitClient
 import com.zhihu.refactorzhihudaily.view.MainActivity
+import com.zhihu.refactorzhihudaily.view.MainActivity.Values.sampleImages
 import com.zhihu.refactorzhihudaily.view.MainActivity.Values.sampleNewsList
 import com.zhihu.refactorzhihudaily.view.recyclerviewdsl.*
 import kotlinx.coroutines.Dispatchers
@@ -20,65 +22,57 @@ object MainImplementation:MainPresenter {
     //recyclerView显示所需的一些变量
     var todayNewsList : List<News>? = MainActivity.sampleNewsList
     var beforeNewsList : MutableList<News>? = MainActivity.sampleNewsList
-    var topImages : MutableList<String>? = MainActivity.sampleImages
-    var totalNewsList : MutableList<News> = sampleNewsList
-    val itemList = ArrayList<Item>()
+    var topImages : MutableList<String> = MainActivity.sampleImages
+    var remixList : MutableList<RemixItem> = ArrayList()
     //获取今日新闻
-    override fun getTodayNews(recyclerView:RecyclerView,itemManager:ItemManager,screenHeight: Int){
+    override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
         GlobalScope.launch (Dispatchers.Main){
             launch(Dispatchers.IO){
                 val dataBean = RetrofitClient.reqApi.getTodayNews().await()
+                topImages = dataBean.getTopImages()
+                todayNewsList = dataBean.getNews()
                 val dataBeanBefore = RetrofitClient.reqApi.getBeforeNews(todayNewsList!!.get(0).date).await()
                 beforeNewsList = dataBeanBefore.getNews()
-                todayNewsList = dataBean.getNews()
-                topImages = dataBean.getTopImages()
+                if (!isSampleList(topImages)){
+                    remixList.add(0,RemixItem(topImages,"??","??","??",0,"??",2))
+                }
+                if (!isSampleList(todayNewsList)){
+                    todayNewsList!!.forEach {
+                        remixList.add(RemixItem(sampleImages,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                    }
+                }
+                if (!isSampleList(beforeNewsList)){
+                    remixList.add(RemixItem(sampleImages,"??","??","??",0, convertDateToChinese(beforeNewsList!!.get(0).date),2))
+                    beforeNewsList!!.forEach {
+                        remixList.add(RemixItem(sampleImages,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                    }
+                }
                 launch (Dispatchers.Main){
-                    firstlyInitTecyclerView(recyclerView,itemManager,screenHeight)
+                    mAdapter.notifyDataSetChanged()
                 }
             }
         }
     }
     //获取前些日子的新闻
-    override fun getTheBeforeNews(recyclerView:RecyclerView, itemManager:ItemManager, screenHeight: Int){
+    override fun getTheBeforeNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 var dataBean : BeforeNews
                     dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
                     beforeNewsList = dataBean.getNews()
-                    launch (Dispatchers.Main){
-                        loadMoreItems(recyclerView,itemManager,screenHeight)
+                if (!isSampleList(beforeNewsList)){
+                    remixList.add(RemixItem(sampleImages,"??","??","??",0, convertDateToChinese(
+                        beforeNewsList!!.get(0).date),2))
+                    beforeNewsList!!.forEach {
+                        remixList.add(RemixItem(sampleImages,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                    }
+                }
+                launch (Dispatchers.Main){
+                        mAdapter.notifyDataSetChanged()
                     }
             }
         }
     }
-    //加载更多新闻
-    override fun loadMoreItems(recyclerView:RecyclerView, itemManager:ItemManager, screenHeight: Int) {
-        recyclerView.withItems{
-                add(DateItem(convertDateToChinese(beforeNewsList!!.get(0).date)))
-                beforeNewsList!!.forEach {
-                    add(NewsItem(it))
-                }
-
-        }
-    }
-    //第一次加载新闻
-    override fun firstlyInitTecyclerView(recyclerView: RecyclerView,itemManager: ItemManager,screenHeight:Int){
-        recyclerView!!.withItems {
-            add(BannerItem(topImages,screenHeight))
-            if (!isSampleList(todayNewsList)){
-                todayNewsList!!.forEach{
-                    singleNews(it)
-                }
-                }
-            if(!isSampleList(beforeNewsList)){
-                beforeNewsList!!.forEach {
-                    singleNews(it)
-                }
-            }
-            }
-
-        }
-
     //把日期转化为中文
     override fun convertDateToChinese(date:String): String {
         val dates = date.toInt()
@@ -95,10 +89,10 @@ object MainImplementation:MainPresenter {
         }
     }
 //统一的设置监听器的函数
-    override fun setListener(smartRefreshLayout:SmartRefreshLayout,recyclerView:RecyclerView,itemManager:ItemManager,screenHeight: Int) {
+    override fun setListener(smartRefreshLayout:SmartRefreshLayout,recyclerView:RecyclerView,mAdapter: MultiItemAdapter,screenHeight: Int) {
         smartRefreshLayout.setOnRefreshListener {
                 RefreshLayout -> run{
-            getTodayNews(recyclerView,itemManager,screenHeight)
+            getTodayNews(recyclerView,mAdapter,screenHeight)
             beforeNewsList = sampleNewsList     //这样做防止穿越时空
             smartRefreshLayout.finishRefresh(2000)
 
@@ -106,9 +100,7 @@ object MainImplementation:MainPresenter {
         }
         smartRefreshLayout.setOnLoadMoreListener {
                 RefreshLayout -> run {
-            itemManager.autoRefresh {
-                loadMoreItems(recyclerView,itemManager,screenHeight)
-            }
+            getTheBeforeNews(recyclerView,mAdapter,screenHeight)
             smartRefreshLayout.finishLoadMore(500)
         }
         }
