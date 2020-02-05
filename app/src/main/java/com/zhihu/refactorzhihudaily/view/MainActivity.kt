@@ -55,8 +55,12 @@ class MainActivity : AppCompatActivity(){
         toolbar.setLayoutParams(paramsForToolbar)
         //recyclerview显示
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = ItemAdapter(itemManager)
-        itemManager.autoRefresh { loadMoreItems(recyclerView,itemManager,screenHeight) }
+        val mAdapter =  ItemAdapter(itemManager)
+        recyclerView.adapter = mAdapter
+        recyclerView.isFocusableInTouchMode = false
+        itemManager.autoRefresh {
+            loadMoreItems(recyclerView,itemManager,screenHeight)
+        }
         //设置各种监听器
         setListener(smartRefreshLayout,recyclerView,itemManager,screenHeight)
         //发送网络请求
