@@ -3,13 +3,11 @@ package com.zhihu.refactorzhihudaily.adapters
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.youth.banner.adapter.BannerAdapter
-import com.zhihu.refactorzhihudaily.model.todaynews.TodayNews
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import androidx.annotation.NonNull
 
 
-class BannerItemAdapter(mDatas: List<String>)//设置数据，也可以调用banner提供的方法,或者自己在adapter中实现
+class BannerItemAdapter(mDatas: List<String>?)//设置数据，也可以调用banner提供的方法,或者自己在adapter中实现
     : BannerAdapter<String, BannerItemAdapter.BannerViewHolder>(mDatas) {
 
     //创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder

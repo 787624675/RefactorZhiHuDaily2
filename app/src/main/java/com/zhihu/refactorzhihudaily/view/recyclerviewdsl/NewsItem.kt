@@ -9,10 +9,8 @@ import cn.edu.twt.retrox.recyclerviewdsl.Item
 import cn.edu.twt.retrox.recyclerviewdsl.ItemController
 import com.bumptech.glide.Glide
 import com.zhihu.refactorzhihudaily.R
-import com.zhihu.refactorzhihudaily.model.Model
 import com.zhihu.refactorzhihudaily.model.News
 import org.jetbrains.anko.layoutInflater
-import java.text.ParsePosition
 
 class NewsItem( val content:News):Item {
 

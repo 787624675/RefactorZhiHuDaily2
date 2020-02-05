@@ -1,4 +1,4 @@
-package com.zhihu.refactorzhihudaily.ui.activities
+package com.zhihu.refactorzhihudaily.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

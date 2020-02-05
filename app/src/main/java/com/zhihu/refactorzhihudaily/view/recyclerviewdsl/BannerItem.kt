@@ -1,20 +1,14 @@
 package com.zhihu.refactorzhihudaily.view.recyclerviewdsl
 
-import android.content.res.Resources
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import cn.edu.twt.retrox.recyclerviewdsl.Item
 import cn.edu.twt.retrox.recyclerviewdsl.ItemController
 import com.youth.banner.Banner
-import com.youth.banner.adapter.BannerAdapter
 import com.youth.banner.indicator.CircleIndicator
 import com.zhihu.refactorzhihudaily.R
 import com.zhihu.refactorzhihudaily.adapters.BannerItemAdapter
-import com.zhihu.refactorzhihudaily.model.Model
-import com.zhihu.refactorzhihudaily.model.todaynews.TodayNews
-import kotlinx.android.synthetic.main.item_banner.view.*
 import org.jetbrains.anko.layoutInflater
 
 class BannerItem(val content: List<String>?,val height:Int):Item {
@@ -36,15 +30,12 @@ class BannerItem(val content: List<String>?,val height:Int):Item {
             params.height = (item.height*0.5).toInt()
             holder.banner.setLayoutParams(params)
             holder.banner.apply {
-
-
-                setAdapter(BannerItemAdapter(Model.sampleImages))
+                setAdapter(BannerItemAdapter(item.content))
                 setOrientation(Banner.HORIZONTAL)
                 setIndicator(CircleIndicator(holder.banner.context))
                 setUserInputEnabled(true)
                 isAutoLoop(true)
                 setDelayTime(3000)
-
             }
         }
 

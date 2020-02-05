@@ -1,4 +1,4 @@
-package com.zhihu.refactorzhihudaily.ui.activities
+package com.zhihu.refactorzhihudaily.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,7 +13,10 @@ class SettingsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_setting)
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.settings, SettingsFragment())
+            .replace(
+                R.id.settings,
+                SettingsFragment()
+            )
             .commit()
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
