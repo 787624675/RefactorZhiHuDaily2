@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/frame_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="300dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 <com.youth.banner.Banner
 
@@ -13,5 +14,32 @@
     app:indicator_normal_color="#C0C0C0"
     app:indicator_selected_color="#ffffff"
     app:indicator_selected_width="6dp"/>
+    <ImageView
+        android:id="@+id/gradient"
+        android:layout_width="match_parent"
+        android:background="@drawable/gradient_for_viewpager"
+        android:layout_gravity="bottom"
+        android:layout_height="200dp"/>
+
+    <TextView
+        android:id="@+id/sum"
+        android:layout_marginLeft="40dp"
+        android:text="今日新闻概述"
+        android:layout_gravity="bottom"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:layout_width="300dp"
+        android:layout_marginBottom="60dp"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/writer"
+        android:textColor="#F0F0F0"
+        android:text="作者/佚名"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 </FrameLayout>

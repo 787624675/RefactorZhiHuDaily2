@@ -23,6 +23,7 @@
             android:autoSizeMaxTextSize="15sp"
             android:autoSizeMinTextSize="8sp"
             android:autoSizeTextType="uniform"
+            android:ellipsize="end"
             android:textStyle="bold"
             android:id="@+id/news_title"
             android:layout_width="match_parent"

@@ -36,6 +36,15 @@ data class TodayNews(
         return topImages
     }
 
+    fun getTopNews(): MutableList<News> {
+
+        val newsList:MutableList<News> = ArrayList()
+        top_stories.forEach {
+            newsList.add(News(it.title,it.hint,it.image,it.id,date))
+        }
+        return newsList
+    }
+
     data class TopStory(
         val ga_prefix: String,
         val hint: String,
@@ -98,4 +107,4 @@ data class DetailedNews(
 )
 data class News(val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String) {
 }
-data class RemixItem(val list: MutableList<String>,val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String,val type: Int)
+data class RemixItem(val list: MutableList<News>?,val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String,val type: Int)

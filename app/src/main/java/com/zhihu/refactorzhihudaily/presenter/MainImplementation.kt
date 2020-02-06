@@ -23,6 +23,7 @@ object MainImplementation:MainPresenter {
     var todayNewsList : List<News>? = MainActivity.sampleNewsList
     var beforeNewsList : MutableList<News>? = MainActivity.sampleNewsList
     var topImages : MutableList<String> = MainActivity.sampleImages
+    var topNewsList : MutableList<News> = sampleNewsList
     var remixList : MutableList<RemixItem> = ArrayList()
     //获取今日新闻
     override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
@@ -30,21 +31,23 @@ object MainImplementation:MainPresenter {
             launch(Dispatchers.IO){
                 val dataBean = RetrofitClient.reqApi.getTodayNews().await()
                 topImages = dataBean.getTopImages()
+                topNewsList = dataBean.getTopNews()
                 todayNewsList = dataBean.getNews()
                 val dataBeanBefore = RetrofitClient.reqApi.getBeforeNews(todayNewsList!!.get(0).date).await()
                 beforeNewsList = dataBeanBefore.getNews()
-                if (!isSampleList(topImages)){
-                    remixList.add(0,RemixItem(topImages,"??","??","??",0,"??",2))
+                if (!isSampleList(topNewsList)){
+                    remixList.add(0,RemixItem(topNewsList, "??","??","??",screenHeight,"??",1))
                 }
                 if (!isSampleList(todayNewsList)){
                     todayNewsList!!.forEach {
-                        remixList.add(RemixItem(sampleImages,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                        remixList.add(RemixItem(null,it.title,it.hint,it.imageUrl,it.id,it.date,3))
                     }
+
                 }
                 if (!isSampleList(beforeNewsList)){
-                    remixList.add(RemixItem(sampleImages,"??","??","??",0, convertDateToChinese(beforeNewsList!!.get(0).date),2))
+                    remixList.add(RemixItem(null,"??","??","??",0, convertDateToChinese(beforeNewsList!!.get(0).date),2))
                     beforeNewsList!!.forEach {
-                        remixList.add(RemixItem(sampleImages,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                        remixList.add(RemixItem(null,it.title,it.hint,it.imageUrl,it.id,it.date,3))
                     }
                 }
                 launch (Dispatchers.Main){
@@ -61,10 +64,10 @@ object MainImplementation:MainPresenter {
                     dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
                     beforeNewsList = dataBean.getNews()
                 if (!isSampleList(beforeNewsList)){
-                    remixList.add(RemixItem(sampleImages,"??","??","??",0, convertDateToChinese(
+                    remixList.add(RemixItem(null,"??","??","??",0, convertDateToChinese(
                         beforeNewsList!!.get(0).date),2))
                     beforeNewsList!!.forEach {
-                        remixList.add(RemixItem(sampleImages,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                        remixList.add(RemixItem(null,it.title,it.hint,it.imageUrl,it.id,it.date,3))
                     }
                 }
                 launch (Dispatchers.Main){
@@ -93,15 +96,14 @@ object MainImplementation:MainPresenter {
         smartRefreshLayout.setOnRefreshListener {
                 RefreshLayout -> run{
             getTodayNews(recyclerView,mAdapter,screenHeight)
-            beforeNewsList = sampleNewsList     //这样做防止穿越时空
-            smartRefreshLayout.finishRefresh(2000)
+            smartRefreshLayout.finishRefresh(200)
 
         }
         }
         smartRefreshLayout.setOnLoadMoreListener {
                 RefreshLayout -> run {
             getTheBeforeNews(recyclerView,mAdapter,screenHeight)
-            smartRefreshLayout.finishLoadMore(500)
+            smartRefreshLayout.finishLoadMore(200)
         }
         }
     }
