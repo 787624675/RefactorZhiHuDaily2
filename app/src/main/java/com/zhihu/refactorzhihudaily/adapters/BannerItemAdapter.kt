@@ -21,8 +21,6 @@ import kotlinx.coroutines.launch
 class BannerItemAdapter(mDatas: List<String>?,var context : Context,var imageId: MutableList<Int>)//设置数据，也可以调用banner提供的方法,或者自己在adapter中实现
     : BannerAdapter<String, BannerItemAdapter.BannerViewHolder>(mDatas) {
 
-    lateinit var detailOnClickListener : View.OnClickListener
-    //创建ViewHolder，可以用viewType这个字段来区分不同的ViewHolder
     override fun onCreateHolder(parent: ViewGroup, viewType: Int): BannerViewHolder {
         val imageView = ImageView(parent.context)
         //注意，必须设置为match_parent，这个是viewpager2强制要求的
@@ -41,6 +39,7 @@ class BannerItemAdapter(mDatas: List<String>?,var context : Context,var imageId:
             intent.setClass(context,DetailActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra("newsId",imageId.get(position))
+            intent.putExtra("type",1)
             context.startActivity(intent)
         }
 

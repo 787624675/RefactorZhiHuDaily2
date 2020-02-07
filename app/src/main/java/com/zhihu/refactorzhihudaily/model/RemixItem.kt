@@ -1,8 +1,5 @@
 package com.zhihu.refactorzhihudaily.model
 
-import android.view.View
-import com.zhihu.refactorzhihudaily.view.recyclerview.DetailOnClickListener
-
 class RemixItem @JvmOverloads constructor( list: MutableList<News>? = null, title:String? = null, hint:String? = null, imageUrl:String? = null, id:Int? = null, date:String? = null, screenHeight:Int = 0, type: Int? = 1){
 
     var screenHeight : Int = 0

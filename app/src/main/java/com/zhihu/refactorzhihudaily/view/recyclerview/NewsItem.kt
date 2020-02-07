@@ -27,6 +27,8 @@ class NewsItem : DelegateType<RemixItem> {
                 intent.setClass(context, DetailActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 intent.putExtra("newsId",item.id)
+                intent.putExtra("type",item.type)
+
                 context.startActivity(intent)
 
             }

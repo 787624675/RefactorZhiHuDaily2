@@ -7,8 +7,8 @@ import com.zhihu.refactorzhihudaily.view.recyclerview.BannerItem
 import com.zhihu.refactorzhihudaily.view.recyclerview.DateItem
 import com.zhihu.refactorzhihudaily.view.recyclerview.NewsItem
 
-class MultiItemAdapter(mContext: Context, mDatas: List<RemixItem>)
-    : DelegateItemAdapter<RemixItem>(mContext, mDatas) {
+class MultiItemAdapter(mContext: Context?, mDatas: List<RemixItem>?)
+    : DelegateItemAdapter<RemixItem>(mContext!!, mDatas!!) {
     init {
         addItemViewDelegate(BannerItem())
         addItemViewDelegate(DateItem())

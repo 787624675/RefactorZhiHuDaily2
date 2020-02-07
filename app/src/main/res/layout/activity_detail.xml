@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.DetailActivity">
-    <WebView
-        android:id="@+id/web_view_two_two"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/web_scroll"
+        android:id="@+id/page"
+        android:layout_weight="8"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

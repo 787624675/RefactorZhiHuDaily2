@@ -1,6 +1,10 @@
 package com.zhihu.refactorzhihudaily.presenter
 
+import WebPageAdapter
+import android.content.Context
+import android.webkit.WebView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.BeforeNews
@@ -21,11 +25,14 @@ object MainImplementation:MainPresenter {
     var topImages : MutableList<String> = MainActivity.sampleImages
     var topNewsList : MutableList<News> = sampleNewsList
     var remixList : MutableList<RemixItem> = ArrayList()
+    var idList = ArrayList<Int>()
     //获取今日新闻
-    override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
+    @JvmOverloads
+     override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
         GlobalScope.launch (Dispatchers.Main){
             launch(Dispatchers.IO){
                 remixList.clear()
+                idList.clear()
                 val dataBean = RetrofitClient.reqApi.getTodayNews().await()
                 topImages = dataBean.getTopImages()
                 topNewsList = dataBean.getTopNews()
@@ -37,6 +44,7 @@ object MainImplementation:MainPresenter {
                         list = topNewsList,
                         screenHeight = screenHeight,
                         type = 1))
+
                 }
                 if (!isSampleList(todayNewsList)){
                     todayNewsList!!.forEach {
@@ -47,6 +55,7 @@ object MainImplementation:MainPresenter {
                             id = it.id,
                             date = it.date,
                             type = 3))
+                        idList.add(it.id)
                     }
 
                 }
@@ -62,6 +71,7 @@ object MainImplementation:MainPresenter {
                             id = it.id,
                             date = it.date,
                             type = 3))
+                        idList.add(it.id)
                     }
                 }
                 launch (Dispatchers.Main){
@@ -71,7 +81,8 @@ object MainImplementation:MainPresenter {
         }
     }
     //获取前些日子的新闻
-    override fun getTheBeforeNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
+    @JvmOverloads
+    override fun getTheBeforeNews( mAdapter:MultiItemAdapter, screenHeight: Int,pageAdapter: WebPageAdapter){
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 var dataBean : BeforeNews
@@ -88,11 +99,49 @@ object MainImplementation:MainPresenter {
                             id = it.id,
                             date = it.date,
                             type = 3))
+                        idList.add(it.id)
                     }
                 }
                 launch (Dispatchers.Main){
+                    if (mAdapter.mContext!=null){
                         mAdapter.notifyDataSetChanged()
                     }
+
+                    if (pageAdapter.webViewList!=null){
+                        pageAdapter.notifyDataSetChanged()
+                    }
+                    }
+            }
+        }
+    }
+    fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context){
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO){
+                var dataBean : BeforeNews
+                dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
+                beforeNewsList = dataBean.getNews()
+                if (!isSampleList(beforeNewsList)){
+                    remixList.add(RemixItem(date =  convertDateToChinese(
+                        beforeNewsList!!.get(0).date),type = 2))
+                    beforeNewsList!!.forEach {
+                        remixList.add(RemixItem(
+                            title = it.title,
+                            hint = it.hint,
+                            imageUrl = it.imageUrl,
+                            id = it.id,
+                            date = it.date,
+                            type = 3))
+                        idList.add(it.id)
+                    }
+                }
+                launch (Dispatchers.Main){
+                    if (pageAdapter.webViewList!=null){
+                        beforeNewsList!!.forEach {
+                            DetailImplementation.addView(it.id,pageList,context)
+                        }
+                        pageAdapter.notifyDataSetChanged()
+                    }
+                }
             }
         }
     }
@@ -122,11 +171,12 @@ object MainImplementation:MainPresenter {
         }
         smartRefreshLayout.setOnLoadMoreListener {
                 RefreshLayout -> run {
-            getTheBeforeNews(recyclerView,mAdapter,screenHeight)
+            getTheBeforeNews(mAdapter,screenHeight)
             smartRefreshLayout.finishLoadMore(200)
         }
         }
     }
+
 
 
 }
