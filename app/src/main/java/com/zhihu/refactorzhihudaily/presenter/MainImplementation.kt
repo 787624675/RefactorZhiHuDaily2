@@ -1,8 +1,6 @@
 package com.zhihu.refactorzhihudaily.presenter
 
 import androidx.recyclerview.widget.RecyclerView
-import cn.edu.twt.retrox.recyclerviewdsl.ItemManager
-import cn.edu.twt.retrox.recyclerviewdsl.withItems
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.BeforeNews
@@ -10,9 +8,7 @@ import com.zhihu.refactorzhihudaily.model.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.model.RetrofitClient
 import com.zhihu.refactorzhihudaily.view.MainActivity
-import com.zhihu.refactorzhihudaily.view.MainActivity.Values.sampleImages
 import com.zhihu.refactorzhihudaily.view.MainActivity.Values.sampleNewsList
-import com.zhihu.refactorzhihudaily.view.recyclerviewdsl.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,6 +25,7 @@ object MainImplementation:MainPresenter {
     override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
         GlobalScope.launch (Dispatchers.Main){
             launch(Dispatchers.IO){
+                remixList.clear()
                 val dataBean = RetrofitClient.reqApi.getTodayNews().await()
                 topImages = dataBean.getTopImages()
                 topNewsList = dataBean.getTopNews()
@@ -36,18 +33,35 @@ object MainImplementation:MainPresenter {
                 val dataBeanBefore = RetrofitClient.reqApi.getBeforeNews(todayNewsList!!.get(0).date).await()
                 beforeNewsList = dataBeanBefore.getNews()
                 if (!isSampleList(topNewsList)){
-                    remixList.add(0,RemixItem(topNewsList, "??","??","??",screenHeight,"??",1))
+                    remixList.add(0,RemixItem(
+                        list = topNewsList,
+                        screenHeight = screenHeight,
+                        type = 1))
                 }
                 if (!isSampleList(todayNewsList)){
                     todayNewsList!!.forEach {
-                        remixList.add(RemixItem(null,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                        remixList.add(RemixItem(
+                            title = it.title,
+                            hint = it.hint,
+                            imageUrl = it.imageUrl,
+                            id = it.id,
+                            date = it.date,
+                            type = 3))
                     }
 
                 }
                 if (!isSampleList(beforeNewsList)){
-                    remixList.add(RemixItem(null,"??","??","??",0, convertDateToChinese(beforeNewsList!!.get(0).date),2))
+                    remixList.add(RemixItem(
+                        date =  convertDateToChinese(beforeNewsList!!.get(0).date),
+                        type = 2))
                     beforeNewsList!!.forEach {
-                        remixList.add(RemixItem(null,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                        remixList.add(RemixItem(
+                            title = it.title,
+                            hint = it.hint,
+                            imageUrl = it.imageUrl,
+                            id = it.id,
+                            date = it.date,
+                            type = 3))
                     }
                 }
                 launch (Dispatchers.Main){
@@ -64,10 +78,16 @@ object MainImplementation:MainPresenter {
                     dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
                     beforeNewsList = dataBean.getNews()
                 if (!isSampleList(beforeNewsList)){
-                    remixList.add(RemixItem(null,"??","??","??",0, convertDateToChinese(
-                        beforeNewsList!!.get(0).date),2))
+                    remixList.add(RemixItem(date =  convertDateToChinese(
+                        beforeNewsList!!.get(0).date),type = 2))
                     beforeNewsList!!.forEach {
-                        remixList.add(RemixItem(null,it.title,it.hint,it.imageUrl,it.id,it.date,3))
+                        remixList.add(RemixItem(
+                            title = it.title,
+                            hint = it.hint,
+                            imageUrl = it.imageUrl,
+                            id = it.id,
+                            date = it.date,
+                            type = 3))
                     }
                 }
                 launch (Dispatchers.Main){

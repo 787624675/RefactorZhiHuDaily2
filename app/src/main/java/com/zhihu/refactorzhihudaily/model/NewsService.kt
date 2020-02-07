@@ -1,5 +1,6 @@
 package com.zhihu.refactorzhihudaily.model
 
+import android.view.View
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -40,10 +41,11 @@ data class TodayNews(
 
         val newsList:MutableList<News> = ArrayList()
         top_stories.forEach {
-            newsList.add(News(it.title,it.hint,it.image,it.id,date))
+            newsList.add(News(it.title,it.hint,it.image,it.id,it.image_hue))
         }
         return newsList
     }
+
 
     data class TopStory(
         val ga_prefix: String,
@@ -107,4 +109,5 @@ data class DetailedNews(
 )
 data class News(val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String) {
 }
-data class RemixItem(val list: MutableList<News>?,val title:String,val hint:String,val imageUrl:String,val id:Int,val date:String,val type: Int)
+
+

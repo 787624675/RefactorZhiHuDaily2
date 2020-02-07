@@ -13,10 +13,12 @@ import cn.edu.twt.retrox.recyclerviewdsl.ItemManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.R
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
+import com.zhihu.refactorzhihudaily.model.Data
 import com.zhihu.refactorzhihudaily.model.News
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.getTodayNews
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.setListener
+import com.zhihu.refactorzhihudaily.view.recyclerview.DetailOnClickListener
 import org.jetbrains.anko.find
 import java.util.*
 
@@ -59,6 +61,7 @@ class MainActivity : AppCompatActivity(){
         val mAdapter =  MultiItemAdapter(this,MainImplementation.remixList)
         recyclerView.adapter = mAdapter
         recyclerView.isFocusableInTouchMode = false
+        var detailOnClickListener : DetailOnClickListener<Int>
         //设置各种监听器
         setListener(smartRefreshLayout,recyclerView,mAdapter,screenHeight)
         //发送网络请求
