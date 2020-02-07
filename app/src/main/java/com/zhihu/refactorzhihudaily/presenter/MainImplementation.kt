@@ -114,37 +114,7 @@ object MainImplementation:MainPresenter {
             }
         }
     }
-    fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context){
-        GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO){
-                var dataBean : BeforeNews
-                dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
-                beforeNewsList = dataBean.getNews()
-                if (!isSampleList(beforeNewsList)){
-                    remixList.add(RemixItem(date =  convertDateToChinese(
-                        beforeNewsList!!.get(0).date),type = 2))
-                    beforeNewsList!!.forEach {
-                        remixList.add(RemixItem(
-                            title = it.title,
-                            hint = it.hint,
-                            imageUrl = it.imageUrl,
-                            id = it.id,
-                            date = it.date,
-                            type = 3))
-                        idList.add(it.id)
-                    }
-                }
-                launch (Dispatchers.Main){
-                    if (pageAdapter.webViewList!=null){
-                        beforeNewsList!!.forEach {
-                            DetailImplementation.addView(it.id,pageList,context)
-                        }
-                        pageAdapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        }
-    }
+
     //把日期转化为中文
     override fun convertDateToChinese(date:String): String {
         val dates = date.toInt()

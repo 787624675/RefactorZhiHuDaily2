@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -39,7 +40,19 @@ class MainActivity : AppCompatActivity(){
         val toolbar :androidx.appcompat.widget.Toolbar = findViewById(R.id.toolbar_top)
         val smartRefreshLayout = find<SmartRefreshLayout>(R.id.refresh_layout)
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view)
-       //初始化工具
+        val top = find<LinearLayout>(R.id.top)
+        //点击top以后跳到最顶部
+        top.setOnClickListener {
+            recyclerView.smoothScrollToPosition(0)
+        }
+        day.setOnClickListener {
+            recyclerView.smoothScrollToPosition(0)
+        }
+        month.setOnClickListener {
+            recyclerView.smoothScrollToPosition(0)
+        }
+
+        //初始化工具
         val itemManager = ItemManager()
         //获取屏幕高度
         val windowManager : WindowManager = this.windowManager

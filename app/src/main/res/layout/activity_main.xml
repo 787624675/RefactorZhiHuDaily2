@@ -24,6 +24,7 @@
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:id="@+id/top"
                 android:orientation="vertical"
                 android:padding="@dimen/cardview_compat_inset_shadow"
                 android:paddingTop="@dimen/cardview_compat_inset_shadow"

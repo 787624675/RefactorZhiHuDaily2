@@ -15,9 +15,7 @@ import com.zhihu.refactorzhihudaily.R
 import com.zhihu.refactorzhihudaily.model.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.presenter.DetailImplementation
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.beforeNewsList
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.getTheBeforeNews
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.getTheBeforeNewsList
+import com.zhihu.refactorzhihudaily.presenter.DetailImplementation.getTheBeforeNewsList
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.remixList
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.todayNewsList
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.topNewsList
@@ -75,6 +73,7 @@ class DetailActivity : AppCompatActivity() {
 
                 override fun onPageSelected(position: Int) {
                     if (position==pageList.size-1){
+                        //滑到最后一页时加载下一天的新闻
                         getTheBeforeNewsList(adapter,pageList,this@DetailActivity)
                     }
                 }
