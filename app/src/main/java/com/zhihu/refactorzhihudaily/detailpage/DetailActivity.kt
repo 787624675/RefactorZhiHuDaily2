@@ -7,12 +7,13 @@ import android.webkit.WebView
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.zhihu.refactorzhihudaily.R
-import com.zhihu.refactorzhihudaily.model.Moduel.sampleNews
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.sampleNews
 import com.zhihu.refactorzhihudaily.model.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
-import com.zhihu.refactorzhihudaily.detailpage.DetailImplementation.getTheBeforeNewsList
-import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.remixList
-import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.topNewsList
+import com.zhihu.refactorzhihudaily.detailpage.DetailPreImpl.getTheBeforeNewsList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.topNewsList
+
 import org.jetbrains.anko.find
 
 class DetailActivity : AppCompatActivity() {
@@ -29,7 +30,7 @@ class DetailActivity : AppCompatActivity() {
             var currentNews : News = sampleNews
             val pageList = ArrayList<WebView>()
             topNewsList.forEach {
-                DetailImplementation.addView(it.id,pageList,this@DetailActivity)
+                DetailPreImpl.addView(it.id,pageList,this@DetailActivity)
                 if (it.id == id){
                     currentNews = it
                 }
@@ -42,7 +43,7 @@ class DetailActivity : AppCompatActivity() {
             val pageList = ArrayList<WebView>()
             remixList!!.forEach {
                 if (it.id!=null&&it.id!=0){
-                    DetailImplementation.addView(it.id!!,pageList,this@DetailActivity)
+                    DetailPreImpl.addView(it.id!!,pageList,this@DetailActivity)
                     if (it.id == id){
                         currentNews = it
                     }

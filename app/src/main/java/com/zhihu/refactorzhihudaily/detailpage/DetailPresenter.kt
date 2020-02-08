@@ -1,5 +1,6 @@
 package com.zhihu.refactorzhihudaily.detailpage
 
+import WebPageAdapter
 import android.content.Context
 import android.os.Build
 import android.webkit.WebSettings
@@ -9,4 +10,5 @@ import androidx.viewpager.widget.ViewPager
 
 interface DetailPresenter {
     fun addView(newsId : Int, pageList : ArrayList<WebView>,context: Context,position : Int = pageList.size)
+    fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context)
 }

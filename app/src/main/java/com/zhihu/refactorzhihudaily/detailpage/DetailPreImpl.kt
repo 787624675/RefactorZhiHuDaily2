@@ -8,6 +8,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import com.zhihu.refactorzhihudaily.mainpage.MainPreImple
 import com.zhihu.refactorzhihudaily.model.BeforeNews
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.beforeNewsList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.idList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.model.RetrofitClient
 import kotlinx.coroutines.Dispatchers
@@ -15,7 +18,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-object DetailImplementation : DetailPresenter {
+object DetailPreImpl : DetailPresenter {
     @JvmOverloads
     override fun addView(newsId : Int, pageList : ArrayList<WebView>, context: Context, position : Int){
         val webView  = WebView(context)
@@ -29,19 +32,19 @@ object DetailImplementation : DetailPresenter {
         webView.loadUrl("https://daily.zhihu.com/story/"+newsId)
         pageList.add(webView)
     }
-    fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context){
+    override fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context){
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 var dataBean : BeforeNews
-                dataBean = RetrofitClient.reqApi.getBeforeNews(MainPreImple.beforeNewsList!!.get(0).date).await()
-                MainPreImple.beforeNewsList = dataBean.getNews()
-                if (!MainPreImple.isSampleList(MainPreImple.beforeNewsList)){
-                    MainPreImple.remixList.add(
+                dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
+                beforeNewsList = dataBean.getNews()
+                if (!MainPreImple.isSampleList(beforeNewsList)){
+                    remixList.add(
                         RemixItem(date =  MainPreImple.convertDateToChinese(
-                            MainPreImple.beforeNewsList!!.get(0).date),type = 2)
+                            beforeNewsList!!.get(0).date),type = 2)
                     )
-                    MainPreImple.beforeNewsList!!.forEach {
-                        MainPreImple.remixList.add(
+                    beforeNewsList!!.forEach {
+                        remixList.add(
                             RemixItem(
                                 title = it.title,
                                 hint = it.hint,
@@ -50,12 +53,12 @@ object DetailImplementation : DetailPresenter {
                                 date = it.date,
                                 type = 3)
                         )
-                        MainPreImple.idList.add(it.id)
+                        idList.add(it.id)
                     }
                 }
                 launch (Dispatchers.Main){
                     if (pageAdapter.webViewList!=null){
-                        MainPreImple.beforeNewsList!!.forEach {
+                        beforeNewsList!!.forEach {
                             addView(
                                 it.id,
                                 pageList,

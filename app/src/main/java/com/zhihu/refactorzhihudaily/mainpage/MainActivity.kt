@@ -9,16 +9,15 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import cn.edu.twt.retrox.recyclerviewdsl.ItemManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.R
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
-import com.zhihu.refactorzhihudaily.model.Moduel
+import com.zhihu.refactorzhihudaily.model.ModMainDetail
 import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.getTodayNews
 import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.setListener
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
 import org.jetbrains.anko.find
 import java.util.*
-import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(),MainView{
     override fun initListeners() {
@@ -69,7 +68,7 @@ class MainActivity : AppCompatActivity(),MainView{
         //获取系统日期并设置
         val date = Date()
         day.setText(date.date.toString())
-        month.setText(Moduel.chineseMonthMap[date.month+1])
+        month.setText(ModMainDetail.chineseMonthMap[date.month+1])
         //根据屏幕高度设置toolbar的height
         val paramsForToolbar: ViewGroup.LayoutParams = toolbar.getLayoutParams();
         paramsForToolbar.height = (screenHeight*0.1).toInt()
@@ -77,7 +76,7 @@ class MainActivity : AppCompatActivity(),MainView{
         //recyclerview显示
         recyclerView.layoutManager = LinearLayoutManager(this)
         val mAdapter =  MultiItemAdapter(this,
-            MainPreImple.remixList)
+            remixList)
         recyclerView.adapter = mAdapter
         recyclerView.isFocusableInTouchMode = false
         //设置各种监听器

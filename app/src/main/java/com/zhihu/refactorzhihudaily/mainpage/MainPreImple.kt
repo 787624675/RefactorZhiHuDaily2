@@ -8,6 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.*
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.beforeNewsList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.idList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.todayNewsList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.topImages
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.topNewsList
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -24,13 +30,7 @@ object MainPreImple: MainPresenter {
         return screenHeight
     }
 
-    //recyclerView显示所需的一些变量
-    var todayNewsList : List<News>? = Moduel.sampleNewsList
-    var beforeNewsList : MutableList<News>? = Moduel.sampleNewsList
-    var topImages : MutableList<String> = Moduel.sampleImages
-    var topNewsList : MutableList<News> = Moduel.sampleNewsList
-    var remixList : MutableList<RemixItem> = ArrayList()
-    var idList = ArrayList<Int>()
+
     //获取今日新闻
     @JvmOverloads
      override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
@@ -136,7 +136,7 @@ object MainPreImple: MainPresenter {
     }
 //判断数据是否是样例数据
     override fun<T>  isSampleList(list: T): Boolean {
-        if (list!!.equals(Moduel.sampleImages)||list.equals(Moduel.sampleNewsList)){
+        if (list!!.equals(ModMainDetail.sampleImages)||list.equals(ModMainDetail.sampleNewsList)){
             return true
         }else{
             return false
