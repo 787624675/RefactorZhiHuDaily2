@@ -21,19 +21,12 @@ import kotlinx.coroutines.withContext
 import org.jetbrains.anko.windowManager
 
 object MainPreImple: MainPresenter {
-    override fun getScreenHeight(context: Context): Int {
-        //获取屏幕高度
-        val windowManager : WindowManager = context.windowManager
-        var outMartics   = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(outMartics)
-        val screenHeight  = outMartics.heightPixels
-        return screenHeight
-    }
+
 
 
     //获取今日新闻
     @JvmOverloads
-     override fun getTodayNews(recyclerView:RecyclerView, mAdapter:MultiItemAdapter, screenHeight: Int){
+     override fun getTodayNews( mAdapter:MultiItemAdapter, screenHeight: Int){
         GlobalScope.launch (Dispatchers.Main){
             launch(Dispatchers.IO){
                 remixList.clear()
@@ -143,11 +136,11 @@ object MainPreImple: MainPresenter {
         }
     }
 //统一的设置监听器的函数
-    override fun setListener(smartRefreshLayout:SmartRefreshLayout,recyclerView:RecyclerView,mAdapter: MultiItemAdapter,screenHeight: Int) {
+    override fun setListener(smartRefreshLayout:SmartRefreshLayout,mAdapter: MultiItemAdapter,screenHeight: Int) {
         smartRefreshLayout.setOnRefreshListener {
                 RefreshLayout -> run{
             getTodayNews(
-                recyclerView,
+
                 mAdapter,
                 screenHeight
             )
