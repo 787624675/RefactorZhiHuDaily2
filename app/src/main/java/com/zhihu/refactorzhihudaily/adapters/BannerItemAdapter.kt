@@ -2,20 +2,12 @@ package com.zhihu.refactorzhihudaily.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.support.v4.media.MediaBrowserCompat
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.core.content.ContextCompat.startActivity
 import com.youth.banner.adapter.BannerAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.zhihu.refactorzhihudaily.model.News
-import com.zhihu.refactorzhihudaily.view.DetailActivity
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-
+import com.zhihu.refactorzhihudaily.detailpage.DetailActivity
 
 
 class BannerItemAdapter(mDatas: List<String>?,var context : Context,var imageId: MutableList<Int>)//设置数据，也可以调用banner提供的方法,或者自己在adapter中实现
@@ -36,7 +28,7 @@ class BannerItemAdapter(mDatas: List<String>?,var context : Context,var imageId:
         Glide.with(holder.imageView.context).load(data).into(holder.imageView)
         holder.imageView.setOnClickListener {
             var intent : Intent = Intent()
-            intent.setClass(context,DetailActivity::class.java)
+            intent.setClass(context, DetailActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.putExtra("newsId",imageId.get(position))
             intent.putExtra("type",1)

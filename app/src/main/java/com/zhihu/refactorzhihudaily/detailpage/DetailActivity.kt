@@ -1,27 +1,20 @@
-package com.zhihu.refactorzhihudaily.view
+package com.zhihu.refactorzhihudaily.detailpage
 
 import WebPageAdapter
-import android.content.Context
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewParent
-import android.webkit.WebSettings
 import android.webkit.WebView
-import android.webkit.WebViewClient
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.zhihu.refactorzhihudaily.R
+import com.zhihu.refactorzhihudaily.model.Moduel.sampleNews
 import com.zhihu.refactorzhihudaily.model.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.presenter.DetailImplementation
 import com.zhihu.refactorzhihudaily.presenter.DetailImplementation.getTheBeforeNewsList
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.remixList
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.todayNewsList
 import com.zhihu.refactorzhihudaily.presenter.MainImplementation.topNewsList
-import com.zhihu.refactorzhihudaily.view.MainActivity.Values.sampleNews
 import org.jetbrains.anko.find
-import java.text.ParsePosition
 
 class DetailActivity : AppCompatActivity() {
 

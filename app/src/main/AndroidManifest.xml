@@ -16,11 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".view.DetailActivity"></activity>
+        <activity android:name=".detailpage.DetailActivity"></activity>
 
 
         <activity
-            android:name=".view.MainActivity"
+            android:name=".mainpage.MainActivity"
             android:theme="@style/AppTheme.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

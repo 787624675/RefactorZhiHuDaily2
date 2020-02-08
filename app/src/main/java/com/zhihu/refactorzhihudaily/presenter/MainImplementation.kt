@@ -1,18 +1,10 @@
 package com.zhihu.refactorzhihudaily.presenter
 
 import WebPageAdapter
-import android.content.Context
-import android.webkit.WebView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
-import com.zhihu.refactorzhihudaily.model.BeforeNews
-import com.zhihu.refactorzhihudaily.model.News
-import com.zhihu.refactorzhihudaily.model.RemixItem
-import com.zhihu.refactorzhihudaily.model.RetrofitClient
-import com.zhihu.refactorzhihudaily.view.MainActivity
-import com.zhihu.refactorzhihudaily.view.MainActivity.Values.sampleNewsList
+import com.zhihu.refactorzhihudaily.model.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -20,10 +12,10 @@ import kotlinx.coroutines.withContext
 
 object MainImplementation:MainPresenter {
     //recyclerView显示所需的一些变量
-    var todayNewsList : List<News>? = MainActivity.sampleNewsList
-    var beforeNewsList : MutableList<News>? = MainActivity.sampleNewsList
-    var topImages : MutableList<String> = MainActivity.sampleImages
-    var topNewsList : MutableList<News> = sampleNewsList
+    var todayNewsList : List<News>? = Moduel.sampleNewsList
+    var beforeNewsList : MutableList<News>? = Moduel.sampleNewsList
+    var topImages : MutableList<String> = Moduel.sampleImages
+    var topNewsList : MutableList<News> = Moduel.sampleNewsList
     var remixList : MutableList<RemixItem> = ArrayList()
     var idList = ArrayList<Int>()
     //获取今日新闻
@@ -124,7 +116,7 @@ object MainImplementation:MainPresenter {
     }
 //判断数据是否是样例数据
     override fun<T>  isSampleList(list: T): Boolean {
-        if (list!!.equals(MainActivity.sampleImages)||list.equals(MainActivity.sampleNewsList)){
+        if (list!!.equals(Moduel.sampleImages)||list.equals(Moduel.sampleNewsList)){
             return true
         }else{
             return false

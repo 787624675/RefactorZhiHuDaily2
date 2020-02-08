@@ -7,11 +7,8 @@ import com.wangzai.rvadapter.base.DelegateType
 import com.wangzai.rvadapter.base.ViewHolder
 
 import com.zhihu.refactorzhihudaily.model.RemixItem
-import com.zhihu.refactorzhihudaily.view.DetailActivity
-import kotlinx.android.synthetic.main.activity_splash.view.*
-import kotlinx.android.synthetic.main.item_date.view.*
+import com.zhihu.refactorzhihudaily.detailpage.DetailActivity
 import kotlinx.android.synthetic.main.item_news.view.*
-import org.jetbrains.anko.generated.appcompatV7.coroutines.R
 
 class NewsItem : DelegateType<RemixItem> {
     override val itemViewLayoutId: Int
