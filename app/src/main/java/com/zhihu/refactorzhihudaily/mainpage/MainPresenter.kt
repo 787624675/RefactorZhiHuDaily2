@@ -1,4 +1,4 @@
-package com.zhihu.refactorzhihudaily.presenter
+package com.zhihu.refactorzhihudaily.mainpage
 
 import WebPageAdapter
 import androidx.recyclerview.widget.RecyclerView

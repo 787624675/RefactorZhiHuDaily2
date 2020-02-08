@@ -10,10 +10,9 @@ import com.zhihu.refactorzhihudaily.R
 import com.zhihu.refactorzhihudaily.model.Moduel.sampleNews
 import com.zhihu.refactorzhihudaily.model.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
-import com.zhihu.refactorzhihudaily.presenter.DetailImplementation
-import com.zhihu.refactorzhihudaily.presenter.DetailImplementation.getTheBeforeNewsList
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.remixList
-import com.zhihu.refactorzhihudaily.presenter.MainImplementation.topNewsList
+import com.zhihu.refactorzhihudaily.detailpage.DetailImplementation.getTheBeforeNewsList
+import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.remixList
+import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.topNewsList
 import org.jetbrains.anko.find
 
 class DetailActivity : AppCompatActivity() {

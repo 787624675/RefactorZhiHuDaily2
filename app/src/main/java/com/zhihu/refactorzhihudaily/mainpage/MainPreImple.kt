@@ -1,4 +1,4 @@
-package com.zhihu.refactorzhihudaily.presenter
+package com.zhihu.refactorzhihudaily.mainpage
 
 import WebPageAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +10,7 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-object MainImplementation:MainPresenter {
+object MainPreImple: MainPresenter {
     //recyclerView显示所需的一些变量
     var todayNewsList : List<News>? = Moduel.sampleNewsList
     var beforeNewsList : MutableList<News>? = Moduel.sampleNewsList
@@ -53,7 +53,11 @@ object MainImplementation:MainPresenter {
                 }
                 if (!isSampleList(beforeNewsList)){
                     remixList.add(RemixItem(
-                        date =  convertDateToChinese(beforeNewsList!!.get(0).date),
+                        date = convertDateToChinese(
+                            beforeNewsList!!.get(
+                                0
+                            ).date
+                        ),
                         type = 2))
                     beforeNewsList!!.forEach {
                         remixList.add(RemixItem(
@@ -81,8 +85,11 @@ object MainImplementation:MainPresenter {
                     dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
                     beforeNewsList = dataBean.getNews()
                 if (!isSampleList(beforeNewsList)){
-                    remixList.add(RemixItem(date =  convertDateToChinese(
-                        beforeNewsList!!.get(0).date),type = 2))
+                    remixList.add(RemixItem(date = convertDateToChinese(
+                        beforeNewsList!!.get(
+                            0
+                        ).date
+                    ),type = 2))
                     beforeNewsList!!.forEach {
                         remixList.add(RemixItem(
                             title = it.title,
@@ -126,14 +133,21 @@ object MainImplementation:MainPresenter {
     override fun setListener(smartRefreshLayout:SmartRefreshLayout,recyclerView:RecyclerView,mAdapter: MultiItemAdapter,screenHeight: Int) {
         smartRefreshLayout.setOnRefreshListener {
                 RefreshLayout -> run{
-            getTodayNews(recyclerView,mAdapter,screenHeight)
+            getTodayNews(
+                recyclerView,
+                mAdapter,
+                screenHeight
+            )
             smartRefreshLayout.finishRefresh(200)
 
         }
         }
         smartRefreshLayout.setOnLoadMoreListener {
                 RefreshLayout -> run {
-            getTheBeforeNews(mAdapter,screenHeight)
+            getTheBeforeNews(
+                mAdapter,
+                screenHeight
+            )
             smartRefreshLayout.finishLoadMore(200)
         }
         }

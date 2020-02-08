@@ -1,4 +1,4 @@
-package com.zhihu.refactorzhihudaily.presenter
+package com.zhihu.refactorzhihudaily.detailpage
 
 import android.content.Context
 import android.os.Build
