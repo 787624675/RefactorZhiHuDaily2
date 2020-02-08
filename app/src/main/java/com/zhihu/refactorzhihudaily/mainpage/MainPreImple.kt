@@ -1,6 +1,9 @@
 package com.zhihu.refactorzhihudaily.mainpage
 
 import WebPageAdapter
+import android.content.Context
+import android.util.DisplayMetrics
+import android.view.WindowManager
 import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
@@ -9,8 +12,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.anko.windowManager
 
 object MainPreImple: MainPresenter {
+    override fun getScreenHeight(context: Context): Int {
+        //获取屏幕高度
+        val windowManager : WindowManager = context.windowManager
+        var outMartics   = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(outMartics)
+        val screenHeight  = outMartics.heightPixels
+        return screenHeight
+    }
+
     //recyclerView显示所需的一些变量
     var todayNewsList : List<News>? = Moduel.sampleNewsList
     var beforeNewsList : MutableList<News>? = Moduel.sampleNewsList

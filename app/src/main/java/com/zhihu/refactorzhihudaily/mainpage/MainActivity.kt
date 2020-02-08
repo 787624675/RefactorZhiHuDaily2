@@ -18,6 +18,7 @@ import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.getTodayNews
 import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.setListener
 import org.jetbrains.anko.find
 import java.util.*
+import kotlin.properties.Delegates
 
 class MainActivity : AppCompatActivity(),MainView{
     override fun initListeners() {
@@ -52,18 +53,19 @@ class MainActivity : AppCompatActivity(),MainView{
     lateinit var toolbar :androidx.appcompat.widget.Toolbar
     lateinit var smartRefreshLayout : SmartRefreshLayout
     lateinit var recyclerView: RecyclerView
+    var screenHeight = 800
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //初始化视图
-        initViews()
-        //初始化监听器
-        initListeners()
+
+        initViews()         //初始化视图
+        initListeners()    //初始化监听器
         //获取屏幕高度
         val windowManager : WindowManager = this.windowManager
         var outMartics   = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(outMartics)
-        val screenHeight:Int = outMartics.heightPixels
+        screenHeight  = outMartics.heightPixels
+
         //获取系统日期并设置
         val date = Date()
         day.setText(date.date.toString())
