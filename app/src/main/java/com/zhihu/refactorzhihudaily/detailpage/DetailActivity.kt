@@ -41,7 +41,8 @@ class DetailActivity : AppCompatActivity() {
         }else{
             var currentNews : RemixItem? = null
             val pageList = ArrayList<WebView>()
-            remixList!!.forEach {
+            for (i:Int in 0 .. remixList.size-1){          //不用forEach了，防止java.util.ArrayList$Itr.next(ArrayList.java:860)
+                val it = remixList.get(i)
                 if (it.id!=null&&it.id!=0){
                     DetailPreImpl.addView(it.id!!,pageList,this@DetailActivity)
                     if (it.id == id){
