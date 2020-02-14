@@ -2,9 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zhihu.refactorzhihudaily">
+
+    <uses-sdk tools:overrideLibrary="com.wangzai.rvadapter" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-sdk tools:overrideLibrary="com.wangzai.rvadapter"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -16,9 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".detailpage.DetailActivity"></activity>
-
-
+        <activity android:name=".loginpage.UserActivity"></activity>
+        <activity android:name=".detailpage.DetailActivity" />
         <activity
             android:name=".mainpage.MainActivity"
             android:theme="@style/AppTheme.FullScreen">

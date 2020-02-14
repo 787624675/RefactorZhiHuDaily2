@@ -1,9 +1,7 @@
 package com.zhihu.refactorzhihudaily.mainpage
 
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.view.ViewGroup
-import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -12,17 +10,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.zhihu.refactorzhihudaily.R
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
-import com.zhihu.refactorzhihudaily.mainpage.MainPreImple.getTodayNews
+import com.zhihu.refactorzhihudaily.loginpage.UserActivity
+
 
 import com.zhihu.refactorzhihudaily.model.ModMainDetail
 
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.getScreenHeight
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.getTodayNews
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.screenHeight
+import de.hdodenhof.circleimageview.CircleImageView
 import org.jetbrains.anko.find
+import org.jetbrains.anko.startActivity
 import java.util.*
 
 class MainActivity : AppCompatActivity(),MainView{
+    override fun showDayMode() {
+
+    }
+
+    override fun showNightMode() {
+
+    }
+
     override fun initListeners() {
         //初始各种监听器
         //点击top以后跳到最顶部
@@ -36,7 +46,28 @@ class MainActivity : AppCompatActivity(),MainView{
             recyclerView.smoothScrollToPosition(0)
         }
         //设置刷新监听
-        MainPreImple.setListener(smartRefreshLayout,mAdapter,screenHeight)
+        smartRefreshLayout.setOnRefreshListener {
+                RefreshLayout -> run{
+            getTodayNews(
+                mAdapter,
+                screenHeight
+            )
+            smartRefreshLayout.finishRefresh(200)
+
+        }
+        }
+        smartRefreshLayout.setOnLoadMoreListener {
+                RefreshLayout -> run {
+            ModMainDetail.getTheBeforeNews(
+                mAdapter,
+                screenHeight
+            )
+            smartRefreshLayout.finishLoadMore(200)
+        }
+        }
+        touxiang.setOnClickListener {
+            startActivity<UserActivity>()
+        }
     }
 
     //初始化视图
@@ -48,6 +79,7 @@ class MainActivity : AppCompatActivity(),MainView{
         smartRefreshLayout = find(R.id.refresh_layout)      //find是anko库的dsl，混用了orz
         recyclerView = findViewById(R.id.recycler_view)
         top = find(R.id.top)
+        touxiang = find(R.id.touxiang)
 
         //获取系统日期并设置
         val date = Date()
@@ -72,6 +104,8 @@ class MainActivity : AppCompatActivity(),MainView{
     private lateinit var toolbar :androidx.appcompat.widget.Toolbar
     private lateinit var smartRefreshLayout : SmartRefreshLayout
     private lateinit var recyclerView: RecyclerView
+    private lateinit var title : TextView
+    private lateinit var touxiang : CircleImageView
     private val mAdapter =  MultiItemAdapter(this, remixList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,5 +116,8 @@ class MainActivity : AppCompatActivity(),MainView{
         initListeners()    //初始化监听器
         //发送网络请求
         getTodayNews(mAdapter,screenHeight)
+        showNightMode()
+
+
     }
 }

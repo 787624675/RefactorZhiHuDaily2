@@ -10,5 +10,5 @@ import androidx.viewpager.widget.ViewPager
 
 interface DetailPresenter {
     fun addView(newsId : Int, pageList : ArrayList<WebView>,context: Context,position : Int = pageList.size)
-    fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context)
+
 }

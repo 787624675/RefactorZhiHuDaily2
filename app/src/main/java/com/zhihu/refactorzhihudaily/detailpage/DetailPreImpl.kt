@@ -6,10 +6,11 @@ import android.os.Build
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import com.zhihu.refactorzhihudaily.mainpage.MainPreImple
 import com.zhihu.refactorzhihudaily.model.BeforeNews
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.beforeNewsList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.convertDateToChinese
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.idList
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.isSampleList
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.model.RetrofitClient
@@ -32,43 +33,5 @@ object DetailPreImpl : DetailPresenter {
         webView.loadUrl("https://daily.zhihu.com/story/"+newsId)
         pageList.add(webView)
     }
-    override fun getTheBeforeNewsList( pageAdapter: WebPageAdapter,pageList:ArrayList<WebView>,context: Context){
-        GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO){
-                var dataBean : BeforeNews
-                dataBean = RetrofitClient.reqApi.getBeforeNews(beforeNewsList!!.get(0).date).await()
-                beforeNewsList = dataBean.getNews()
-                if (!MainPreImple.isSampleList(beforeNewsList)){
-                    remixList.add(
-                        RemixItem(date =  MainPreImple.convertDateToChinese(
-                            beforeNewsList!!.get(0).date),type = 2)
-                    )
-                    beforeNewsList!!.forEach {
-                        remixList.add(
-                            RemixItem(
-                                title = it.title,
-                                hint = it.hint,
-                                imageUrl = it.imageUrl,
-                                id = it.id,
-                                date = it.date,
-                                type = 3)
-                        )
-                        idList.add(it.id)
-                    }
-                }
-                launch (Dispatchers.Main){
-                    if (pageAdapter.webViewList!=null){
-                        beforeNewsList!!.forEach {
-                            addView(
-                                it.id,
-                                pageList,
-                                context
-                            )
-                        }
-                        pageAdapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        }
-    }
+
 }
