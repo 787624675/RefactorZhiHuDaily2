@@ -1,6 +1,5 @@
 package com.zhihu.refactorzhihudaily.model
 
-import android.view.View
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -25,7 +24,15 @@ data class TodayNews(
 
         val newsList:MutableList<News> = ArrayList()
         stories.forEach {
-            newsList.add(News(it.title,it.hint,it.images[0],it.id,date))
+            newsList.add(
+                News(
+                    it.title,
+                    it.hint,
+                    it.images[0],
+                    it.id,
+                    date
+                )
+            )
         }
         return newsList
     }
@@ -41,7 +48,15 @@ data class TodayNews(
 
         val newsList:MutableList<News> = ArrayList()
         top_stories.forEach {
-            newsList.add(News(it.title,it.hint,it.image,it.id,it.image_hue))
+            newsList.add(
+                News(
+                    it.title,
+                    it.hint,
+                    it.image,
+                    it.id,
+                    it.image_hue
+                )
+            )
         }
         return newsList
     }
@@ -76,7 +91,15 @@ data class BeforeNews(
 
         val newsList:MutableList<News> = ArrayList()
         stories.forEach {
-            newsList.add(News(it.title,it.hint,it.images[0],it.id,date))
+            newsList.add(
+                News(
+                    it.title,
+                    it.hint,
+                    it.images[0],
+                    it.id,
+                    date
+                )
+            )
         }
         return newsList
     }

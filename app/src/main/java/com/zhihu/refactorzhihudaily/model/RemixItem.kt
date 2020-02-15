@@ -1,8 +1,6 @@
 package com.zhihu.refactorzhihudaily.model
 
-import android.graphics.Color
-
-class RemixItem @JvmOverloads constructor( list: MutableList<News>? = null, title:String? = null, hint:String? = null, imageUrl:String? = null, id:Int? = null, date:String? = null, screenHeight:Int = 0, type: Int? = 1){
+class RemixItem @JvmOverloads constructor(list: MutableList<News>? = null, title:String? = null, hint:String? = null, imageUrl:String? = null, id:Int? = null, date:String? = null, screenHeight:Int = 0, type: Int? = 1){
 
     var screenHeight : Int = 0
     var list: MutableList<News>? = null

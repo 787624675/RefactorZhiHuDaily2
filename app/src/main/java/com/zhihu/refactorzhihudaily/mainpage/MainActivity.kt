@@ -1,7 +1,10 @@
 package com.zhihu.refactorzhihudaily.mainpage
 
+import android.content.Context
 import android.os.Bundle
+import android.util.DisplayMetrics
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -15,23 +18,31 @@ import com.zhihu.refactorzhihudaily.loginpage.UserActivity
 
 import com.zhihu.refactorzhihudaily.model.ModMainDetail
 
-import com.zhihu.refactorzhihudaily.model.ModMainDetail.getScreenHeight
-import com.zhihu.refactorzhihudaily.model.ModMainDetail.getTodayNews
+
+
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.screenHeight
+import com.zhihu.refactorzhihudaily.network.RetrofitClient.getTheBeforeNews
+import com.zhihu.refactorzhihudaily.network.RetrofitClient.getTodayNews
 import de.hdodenhof.circleimageview.CircleImageView
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.windowManager
 import java.util.*
 
 class MainActivity : AppCompatActivity(),MainView{
-    override fun showDayMode() {
+    fun getScreenHeight(context: Context): Int {
+        //获取屏幕高度
+        val windowManager : WindowManager = context.windowManager
+        val outMartics   = DisplayMetrics()
+        windowManager.defaultDisplay.getMetrics(outMartics)
+        val screenHeight  = outMartics.heightPixels
+        return screenHeight
+    }
+    override fun showErrorMode(adapter: MultiItemAdapter) {
 
     }
 
-    override fun showNightMode() {
-
-    }
 
     override fun initListeners() {
         //初始各种监听器
@@ -58,7 +69,7 @@ class MainActivity : AppCompatActivity(),MainView{
         }
         smartRefreshLayout.setOnLoadMoreListener {
                 RefreshLayout -> run {
-            ModMainDetail.getTheBeforeNews(
+            getTheBeforeNews(
                 mAdapter,
                 screenHeight
             )
@@ -107,16 +118,18 @@ class MainActivity : AppCompatActivity(),MainView{
     private lateinit var title : TextView
     private lateinit var touxiang : CircleImageView
     private val mAdapter =  MultiItemAdapter(this, remixList)
+    lateinit var mainPresenter: MainPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        mainPresenter = MainPresenter(this,this)
         initViews()         //初始化视图
         initListeners()    //初始化监听器
         //发送网络请求
         getTodayNews(mAdapter,screenHeight)
-        showNightMode()
+
 
 
     }
