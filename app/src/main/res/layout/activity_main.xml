@@ -8,14 +8,9 @@
     android:orientation="vertical"
     tools:context=".mainpage.MainActivity">
     <androidx.appcompat.widget.Toolbar
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         android:id="@+id/toolbar_top"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-
-        android:background="#FFFFFF"
         >
         <LinearLayout
             android:id="@+id/line1"
@@ -89,7 +84,6 @@
                 android:text="知乎日报"
                 android:layout_gravity="center"
                 android:gravity="left"
-                android:textColor="#000000"
                 android:autoSizeMaxTextSize="25sp"
                 android:autoSizeMinTextSize="8sp"
                 android:autoSizeTextType="uniform"

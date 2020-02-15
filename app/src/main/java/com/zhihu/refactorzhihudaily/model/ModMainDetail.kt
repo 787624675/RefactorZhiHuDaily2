@@ -33,7 +33,7 @@ object ModMainDetail{
     var idList = ArrayList<Int>()
     var screenHeight  = 800
     var screenWidth = 500
-    var dayOrNight = "DAY"
+    var dayOrNight = "Day"
    // lateinit var mainContext:Context  //全部黄掉了，提示会导致内存泄漏，幻想破灭
 
 

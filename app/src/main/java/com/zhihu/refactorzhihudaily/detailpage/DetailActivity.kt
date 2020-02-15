@@ -42,7 +42,6 @@ class DetailActivity : AppCompatActivity() ,DetailView{
         var type = intent.getIntExtra("type",3)       //拿到被点击的item的种类，1表示banner被点击，3表示recyclerview被点击
         var id = intent.getIntExtra("newsId",0)        //拿到被点击新闻的id
 
-
         val detailPresenter = DetailPresenter(this,this)
         detailPresenter.initView(type,id,page,this)
 

@@ -56,7 +56,7 @@ class BannerItem : DelegateType<RemixItem> {
 
             var lastValue : Int = 0;
             var isLeft  = true;
-            var lastMove : Float = 0f
+            var lastMove : Int = 1
 
             var color : String
             var colors : IntArray
@@ -72,8 +72,6 @@ class BannerItem : DelegateType<RemixItem> {
             val dots = mutableListOf<Dot>(dot5,dot4,dot3,dot2,dot1)
 
             dots[0].extend(15f)
-
-
 
             dots.forEach{
                 all.addView(it)
@@ -137,13 +135,11 @@ class BannerItem : DelegateType<RemixItem> {
                             if (position>0){
                                 dots[position-1].extend(positionOffset)
                                 dots[position].shorten(positionOffset)
-                                dots[position].moveRight(positionOffset)
+
                             }else{
                                 dots[4].extend(positionOffset)
                                 dots[0].shorten(positionOffset)
-                                for (i in 0 .. 3){
-                                    dots[i].moveLeft(positionOffset)
-                                }
+
 
                             }
                         }
@@ -158,6 +154,11 @@ class BannerItem : DelegateType<RemixItem> {
                         writer.setText(item.list!!.get(position).hint)
                         normalGroup.setColors(colors)
                         gradient.background = normalGroup
+                        if (position<lastMove){
+                            dots[lastMove].init()
+                        }
+
+                        lastMove = position
 
                     }
 
