@@ -32,6 +32,7 @@ object ModMainDetail{
     var remixList : MutableList<RemixItem> = ArrayList()
     var idList = ArrayList<Int>()
     var screenHeight  = 800
+    var screenWidth = 500
     var dayOrNight = "DAY"
    // lateinit var mainContext:Context  //全部黄掉了，提示会导致内存泄漏，幻想破灭
 

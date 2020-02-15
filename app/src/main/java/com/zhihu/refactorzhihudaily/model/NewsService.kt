@@ -14,6 +14,8 @@ interface NewsService {
 
     @GET("api/3/news/{id}")
     fun getDetailedNews(@Path("id")id:Int):Deferred<DetailedNews>
+
+
 }
 data class TodayNews(
     val date: String,

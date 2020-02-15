@@ -9,17 +9,43 @@ import android.webkit.WebViewClient
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.*
+import com.zhihu.refactorzhihudaily.network.RetrofitClient.getTodayNews
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.jetbrains.anko.coroutines.experimental.bg
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import kotlin.coroutines.suspendCoroutine
 
+interface MyCallBack<T>{
+    fun onSuccess(value:T)
+    fun onError(t:Throwable)
+
+}
+enum class ErrorType {
+    NETWORK_ERROR,//网络出错
+    SERVICE_ERROR,//服务器访问异常
+    RESPONSE_ERROR//请求返回值异常
+}
+
+/**
+ * 网络请求出错的响应
+ */
+data class ErrorResponse(
+    val errorType:ErrorType,//错误类型
+    val errorTag:String,//错误tag,用于区别哪个请求出错
+    val errorCode: String?,//错误代码
+    val message: String?//错误信息
+)
 
 
 object RetrofitClient {
+
+
+
     val BASE_URL =  "https://news-at.zhihu.com/"
 
     val reqApi by lazy {
@@ -30,6 +56,7 @@ object RetrofitClient {
             .build()
         return@lazy retrofit.create(NewsService::class.java)
     }
+
 //detailActivity翻到最后一页时发送网络请求
     fun getTheBeforeNewsList(pageAdapter: WebPageAdapter, pageList:ArrayList<WebView>, context: Context){
 

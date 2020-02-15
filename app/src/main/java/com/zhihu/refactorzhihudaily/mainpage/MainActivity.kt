@@ -22,11 +22,13 @@ import com.zhihu.refactorzhihudaily.model.ModMainDetail
 
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.remixList
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.screenHeight
+import com.zhihu.refactorzhihudaily.network.Experimental
 import com.zhihu.refactorzhihudaily.network.RetrofitClient.getTheBeforeNews
 import com.zhihu.refactorzhihudaily.network.RetrofitClient.getTodayNews
 import de.hdodenhof.circleimageview.CircleImageView
 import org.jetbrains.anko.find
 import org.jetbrains.anko.startActivity
+import org.jetbrains.anko.toast
 import org.jetbrains.anko.windowManager
 import java.util.*
 
@@ -129,8 +131,6 @@ class MainActivity : AppCompatActivity(),MainView{
         initListeners()    //初始化监听器
         //发送网络请求
         getTodayNews(mAdapter,screenHeight)
-
-
 
     }
 }

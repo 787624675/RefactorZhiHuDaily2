@@ -14,16 +14,18 @@ class MainPresenter {
         this.mainView = mainView
         this.context = context
     }
-    fun getScreenHeight(context: Context): Int {
+    fun getScreenHeight(context: Context): MutableList<Int> {
         //获取屏幕高度
         val windowManager : WindowManager = context.windowManager
         val outMartics   = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(outMartics)
         val screenHeight  = outMartics.heightPixels
-        return screenHeight
+        val screenWidth =  outMartics.widthPixels
+        return mutableListOf<Int>(screenHeight.toInt(),screenWidth.toInt())
     }
     fun getData(){
-        ModMainDetail.screenHeight = getScreenHeight(context)
+        ModMainDetail.screenHeight = getScreenHeight(context)[0]
+        ModMainDetail.screenWidth = getScreenHeight(context)[1]
 
     }
 }
