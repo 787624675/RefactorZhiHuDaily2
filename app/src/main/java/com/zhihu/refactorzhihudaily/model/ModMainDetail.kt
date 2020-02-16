@@ -1,5 +1,7 @@
 package com.zhihu.refactorzhihudaily.model
 
+import com.zhihu.refactorzhihudaily.network.News
+
 
 object ModMainDetail{
     //由于main activity 和 detail activity的数据是相同的而且需要同步更新，所以用这个单例来装载。。。

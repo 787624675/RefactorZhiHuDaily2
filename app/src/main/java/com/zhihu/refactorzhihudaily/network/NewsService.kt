@@ -1,4 +1,4 @@
-package com.zhihu.refactorzhihudaily.model
+package com.zhihu.refactorzhihudaily.network
 
 import kotlinx.coroutines.Deferred
 import retrofit2.http.GET
@@ -14,6 +14,7 @@ interface NewsService {
 
     @GET("api/3/news/{id}")
     fun getDetailedNews(@Path("id")id:Int):Deferred<DetailedNews>
+
 
 
 }

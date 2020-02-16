@@ -9,16 +9,12 @@ import android.webkit.WebViewClient
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.*
-import com.zhihu.refactorzhihudaily.network.RetrofitClient.getTodayNews
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.jetbrains.anko.coroutines.experimental.bg
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import kotlin.coroutines.suspendCoroutine
 
 interface MyCallBack<T>{
     fun onSuccess(value:T)

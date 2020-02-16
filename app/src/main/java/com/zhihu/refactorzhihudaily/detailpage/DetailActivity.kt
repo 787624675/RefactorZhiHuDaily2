@@ -2,6 +2,7 @@ package com.zhihu.refactorzhihudaily.detailpage
 
 import WebPageAdapter
 import android.content.Context
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,6 +25,9 @@ class DetailActivity : AppCompatActivity() ,DetailView{
             webView.getSettings().setDomStorageEnabled(true)
             webView.settings.blockNetworkImage = false
             webView.loadUrl("https://daily.zhihu.com/story/"+newsId)
+            webView.apply {
+                setBackgroundColor(Color.parseColor("#000000"))
+            }
             pageList.add(webView)
     }
 
@@ -47,7 +51,4 @@ class DetailActivity : AppCompatActivity() ,DetailView{
 
 
     }
-
-
-
 }

@@ -5,7 +5,7 @@ import android.content.Context
 import android.webkit.WebView
 import androidx.viewpager.widget.ViewPager
 import com.zhihu.refactorzhihudaily.model.ModMainDetail
-import com.zhihu.refactorzhihudaily.model.News
+import com.zhihu.refactorzhihudaily.network.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.network.RetrofitClient
 

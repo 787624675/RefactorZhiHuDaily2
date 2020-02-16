@@ -48,6 +48,12 @@ class HtmlUtil {
         return css+HIDE_HEADER_STYLE+html+js
     }
 
+    fun createNightHtmlData( html:String,  cssList:List<String>,  jsList:List<String>):String {
+        val css = createCssTag(cssList)+ "</head><body class=\"night\">"
+        val js = createJsTag(jsList);
+        return css+HIDE_HEADER_STYLE+html+js
+    }
+
 
 
 

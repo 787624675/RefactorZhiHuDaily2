@@ -3,7 +3,6 @@ package com.zhihu.refactorzhihudaily.network
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.ModMainDetail
 import com.zhihu.refactorzhihudaily.model.ModMainDetail.screenHeight
-import com.zhihu.refactorzhihudaily.model.NewsService
 import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.network.RetrofitClient.reqApi
 import kotlinx.coroutines.Deferred
