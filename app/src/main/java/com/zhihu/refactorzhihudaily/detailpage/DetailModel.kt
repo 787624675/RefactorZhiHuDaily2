@@ -19,7 +19,8 @@ import okhttp3.OkHttpClient
 import java.lang.Exception
 
 class DetailModel constructor(val context: Context){
-
+//有2个model，令一个是ModelMain，
+//由于webview的夜间模式没做成，所以这个model并未起作用。。。quq
 
     lateinit var  cssUrls : List<String>
     lateinit var jsUrls : List<String>

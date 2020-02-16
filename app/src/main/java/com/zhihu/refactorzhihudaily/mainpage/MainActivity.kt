@@ -33,14 +33,6 @@ import org.jetbrains.anko.windowManager
 import java.util.*
 
 class MainActivity : AppCompatActivity(),MainView{
-    fun getScreenHeight(context: Context): Int {
-        //获取屏幕高度
-        val windowManager : WindowManager = context.windowManager
-        val outMartics   = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(outMartics)
-        val screenHeight  = outMartics.heightPixels
-        return screenHeight
-    }
     override fun showErrorMode(adapter: MultiItemAdapter) {
 
     }
@@ -100,7 +92,6 @@ class MainActivity : AppCompatActivity(),MainView{
         month.setText(ModMainDetail.chineseMonthMap[date.month+1])
 
         //根据屏幕高度设置toolbar的height
-        screenHeight  = getScreenHeight(this)
         val paramsForToolbar: ViewGroup.LayoutParams = toolbar.getLayoutParams();
         paramsForToolbar.height = (screenHeight*0.1).toInt()
         toolbar.setLayoutParams(paramsForToolbar)
@@ -127,6 +118,7 @@ class MainActivity : AppCompatActivity(),MainView{
         setContentView(R.layout.activity_main)
 
         mainPresenter = MainPresenter(this,this)
+        mainPresenter.getScreenHeight(this)
         initViews()         //初始化视图
         initListeners()    //初始化监听器
         //发送网络请求

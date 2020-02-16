@@ -11,16 +11,13 @@ import com.zhihu.refactorzhihudaily.network.RetrofitClient
 
 class DetailPresenter {
 
-    //这个presenter有2个model，一个是ModelMain
+    //这个presenter有2个model，令一个是ModelMain，
     constructor(detailView: DetailView,context: Context){
         this.detailView = detailView
         this.context = context
     }
     var  detailView : DetailView
     var context: Context
-
-
-
     //获取正确的current position
     fun getIndex(remixList: MutableList<RemixItem>, currentNews: RemixItem):Int{
         var index : Int = 0
@@ -41,7 +38,7 @@ class DetailPresenter {
             ModMainDetail.topNewsList.forEach {                //把topNews翻了个遍就是为了找与被点击新闻id相同的那个，然后先记着它
                detailView.addView(it.id,pageList,context)
             //   mDetailModel.getTheNightNews(id,pageList)   //试一试,并不行
-                if (it.id == id){                         //找到了，哈哈
+                if (it.id == id){                         //找到了
                     currentNews = it                   //先记着它
                 }
             }
