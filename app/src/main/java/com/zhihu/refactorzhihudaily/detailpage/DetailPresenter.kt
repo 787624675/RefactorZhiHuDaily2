@@ -10,13 +10,17 @@ import com.zhihu.refactorzhihudaily.model.RemixItem
 import com.zhihu.refactorzhihudaily.network.RetrofitClient
 
 class DetailPresenter {
-    lateinit var  detailView : DetailView
-    lateinit var context: Context
 
+    //这个presenter有2个model，一个是ModelMain
     constructor(detailView: DetailView,context: Context){
         this.detailView = detailView
         this.context = context
     }
+    var  detailView : DetailView
+    var context: Context
+
+
+
     //获取正确的current position
     fun getIndex(remixList: MutableList<RemixItem>, currentNews: RemixItem):Int{
         var index : Int = 0
@@ -30,11 +34,13 @@ class DetailPresenter {
 //这个函数把webview放到viewpager里
     //分banner和list两种不同情况
     fun initView(type:Int,id:Int,page:ViewPager,context: Context){
+    var mDetailModel = DetailModel(context)
         if (type == 1){    //type==1 表示是banner被点击了
             var currentNews : News = ModMainDetail.sampleNews         //被点击的新闻，默认是sample
             val pageList = ArrayList<WebView>()          //新建webView列表
             ModMainDetail.topNewsList.forEach {                //把topNews翻了个遍就是为了找与被点击新闻id相同的那个，然后先记着它
-                detailView.addView(it.id,pageList,context)
+               detailView.addView(it.id,pageList,context)
+            //   mDetailModel.getTheNightNews(id,pageList)   //试一试,并不行
                 if (it.id == id){                         //找到了，哈哈
                     currentNews = it                   //先记着它
                 }

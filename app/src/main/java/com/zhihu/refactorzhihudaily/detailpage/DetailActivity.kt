@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -41,7 +42,13 @@ class DetailActivity : AppCompatActivity() ,DetailView{
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
-
+        //将状态栏透明
+        if(Build.VERSION.SDK_INT>=21){
+            val decorView = getWindow().getDecorView();
+            val option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+            decorView.setSystemUiVisibility(option);
+            getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
         page = find<ViewPager>(R.id.page)
         var type = intent.getIntExtra("type",3)       //拿到被点击的item的种类，1表示banner被点击，3表示recyclerview被点击
         var id = intent.getIntExtra("newsId",0)        //拿到被点击新闻的id

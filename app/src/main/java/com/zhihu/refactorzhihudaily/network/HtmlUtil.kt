@@ -1,6 +1,9 @@
 package com.zhihu.refactorzhihudaily.network
 
 class HtmlUtil {
+
+    //由于webview的夜间模式没做成，所以这个class并没有起到作用
+
     //为了实现webview的夜间模式创建的类
 
     // css样式，隐藏header
@@ -49,9 +52,11 @@ class HtmlUtil {
     }
 
     fun createNightHtmlData( html:String,  cssList:List<String>,  jsList:List<String>):String {
-        val css = createCssTag(cssList)+ "</head><body class=\"night\">"
+
+        val css = createCssTag(cssList)+ "\n"+"</head><body class=\"night\">"
         val js = createJsTag(jsList);
         return css+HIDE_HEADER_STYLE+html+js
+
     }
 
 

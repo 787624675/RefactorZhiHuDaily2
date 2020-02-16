@@ -15,7 +15,11 @@ interface NewsService {
     @GET("api/3/news/{id}")
     fun getDetailedNews(@Path("id")id:Int):Deferred<DetailedNews>
 
+    @GET("js/story.js?v={id}")
+    fun getJs(@Path("id")id:String):Deferred<String>
 
+    @GET("css/news_qa.auto.css?v={id}")
+    fun getCss(@Path("id")id:String):Deferred<String>
 
 }
 data class TodayNews(
