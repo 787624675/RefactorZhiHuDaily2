@@ -1,22 +1,14 @@
 package com.zhihu.refactorzhihudaily.detailpage
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Build
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import android.widget.Toast
-import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
-import com.zhihu.refactorzhihudaily.model.ModMainDetail
-import com.zhihu.refactorzhihudaily.model.RemixItem
-import com.zhihu.refactorzhihudaily.network.BeforeNews
 import com.zhihu.refactorzhihudaily.network.DetailedNews
 import com.zhihu.refactorzhihudaily.network.HtmlUtil
 import com.zhihu.refactorzhihudaily.network.RetrofitClient
 import kotlinx.coroutines.*
-import okhttp3.OkHttpClient
-import java.lang.Exception
 
 class DetailModel constructor(val context: Context){
 //有2个model，令一个是ModelMain，
@@ -32,7 +24,7 @@ class DetailModel constructor(val context: Context){
     lateinit var shareUrl:String
     val mHtmlUtil = HtmlUtil()
     //不能用
-    fun  addNightView( pageList: ArrayList<WebView>, context: Context) {
+    fun  addLocalHtml(pageList: ArrayList<WebView>, context: Context) {
         val webView  = WebView(context)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    //为了让图片全部加载出来
             webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
@@ -83,7 +75,7 @@ class DetailModel constructor(val context: Context){
 
             launch (Dispatchers.Main){
 
-                addNightView(pageList,context)
+                addLocalHtml(pageList,context)
             }
         }
     }

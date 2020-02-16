@@ -9,6 +9,7 @@ import android.webkit.WebViewClient
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.zhihu.refactorzhihudaily.adapters.MultiItemAdapter
 import com.zhihu.refactorzhihudaily.model.*
+import com.zhihu.refactorzhihudaily.model.ModMainDetail.screenHeight
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -53,70 +54,11 @@ object RetrofitClient {
         return@lazy retrofit.create(NewsService::class.java)
     }
 
-//detailActivity翻到最后一页时发送网络请求
-    fun getTheBeforeNewsList(pageAdapter: WebPageAdapter, pageList:ArrayList<WebView>, context: Context){
 
-        GlobalScope.launch(Dispatchers.Main) {
-            withContext(Dispatchers.IO){
-                var dataBean : BeforeNews
-                dataBean = reqApi.getBeforeNews(
-                    ModMainDetail.beforeNewsList!!.get(0).date).await()
-                ModMainDetail.beforeNewsList = dataBean.getNews()
-                if (!ModMainDetail.isSampleList(ModMainDetail.beforeNewsList)){
-                    ModMainDetail.remixList.add(
-                        RemixItem(
-                            date = convertDateToChinese(
-                                ModMainDetail.beforeNewsList!!.get(
-                                    0
-                                ).date
-                            ), type = 2
-                        )
-                    )
-                    ModMainDetail.beforeNewsList!!.forEach {
-                        ModMainDetail.remixList.add(
-                            RemixItem(
-                                title = it.title,
-                                hint = it.hint,
-                                imageUrl = it.imageUrl,
-                                id = it.id,
-                                date = it.date,
-                                type = 3
-                            )
-                        )
-                        ModMainDetail.idList.add(it.id)
-                    }
-                }
-                launch (Dispatchers.Main){
-                    if (pageAdapter.webViewList!=null){
-                        ModMainDetail.beforeNewsList!!.forEach {
-                            addView(
-                                it.id,
-                                pageList,
-                                context
-                            )
-                        }
-                        pageAdapter.notifyDataSetChanged()
-                    }
-                }
-            }
-        }
-    }
-    fun addView(newsId: Int, pageList: ArrayList<WebView>, context: Context) {
-        val webView  = WebView(context)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {    //为了让图片全部加载出来
-            webView.settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
-        }
-        webView.webViewClient = WebViewClient()
-        webView.settings.javaScriptEnabled = true
-        webView.getSettings().setDomStorageEnabled(true)
-        webView.settings.blockNetworkImage = false
-        webView.loadUrl("https://daily.zhihu.com/story/"+newsId)
-        pageList.add(webView)
-    }
 
     //获取今日新闻
     @JvmOverloads
-    fun getTodayNews(mAdapter: MultiItemAdapter, screenHeight: Int){
+    fun getTodayNews(mAdapter: MultiItemAdapter){
         GlobalScope.launch (Dispatchers.Main){
             launch(Dispatchers.IO){
                 ModMainDetail.remixList.clear()
@@ -187,7 +129,7 @@ object RetrofitClient {
     }
     //获取前些日子的新闻
     @JvmOverloads
-    fun getTheBeforeNews(mAdapter: MultiItemAdapter, screenHeight: Int){
+    fun getTheBeforeNews(mAdapter: MultiItemAdapter){
         GlobalScope.launch(Dispatchers.Main) {
             withContext(Dispatchers.IO){
                 var dataBean : BeforeNews

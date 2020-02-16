@@ -7,7 +7,12 @@ import androidx.viewpager.widget.ViewPager
 import com.zhihu.refactorzhihudaily.model.ModMainDetail
 import com.zhihu.refactorzhihudaily.network.News
 import com.zhihu.refactorzhihudaily.model.RemixItem
+import com.zhihu.refactorzhihudaily.network.BeforeNews
 import com.zhihu.refactorzhihudaily.network.RetrofitClient
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class DetailPresenter {
 
@@ -75,12 +80,60 @@ class DetailPresenter {
                 override fun onPageSelected(position: Int) {
                     if (position==pageList.size-1){
                         //滑到最后一页时加载下一天的新闻
-                        RetrofitClient.getTheBeforeNewsList(adapter, pageList, context)
+                        getTheBeforeNewsList(adapter, pageList, context)
                     }
                 }
 
             })
 
+        }
+    }
+    //detailActivity翻到最后一页时发送网络请求
+    fun getTheBeforeNewsList(pageAdapter: WebPageAdapter, pageList:ArrayList<WebView>, context: Context){
+
+        GlobalScope.launch(Dispatchers.Main) {
+            withContext(Dispatchers.IO){
+                var dataBean : BeforeNews
+                dataBean = RetrofitClient.reqApi.getBeforeNews(
+                    ModMainDetail.beforeNewsList!!.get(0).date).await()
+                ModMainDetail.beforeNewsList = dataBean.getNews()
+                if (!ModMainDetail.isSampleList(ModMainDetail.beforeNewsList)){
+                    ModMainDetail.remixList.add(
+                        RemixItem(
+                            date = RetrofitClient.convertDateToChinese(
+                                ModMainDetail.beforeNewsList!!.get(
+                                    0
+                                ).date
+                            ), type = 2
+                        )
+                    )
+                    ModMainDetail.beforeNewsList!!.forEach {
+                        ModMainDetail.remixList.add(
+                            RemixItem(
+                                title = it.title,
+                                hint = it.hint,
+                                imageUrl = it.imageUrl,
+                                id = it.id,
+                                date = it.date,
+                                type = 3
+                            )
+                        )
+                        ModMainDetail.idList.add(it.id)
+                    }
+                }
+                launch (Dispatchers.Main){
+                    if (pageAdapter.webViewList!=null){
+                        ModMainDetail.beforeNewsList!!.forEach {
+                            detailView.addView(
+                                it.id,
+                                pageList,
+                                context
+                            )
+                        }
+                        pageAdapter.notifyDataSetChanged()
+                    }
+                }
+            }
         }
     }
 

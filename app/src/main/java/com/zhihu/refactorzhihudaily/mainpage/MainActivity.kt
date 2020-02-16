@@ -33,11 +33,6 @@ import org.jetbrains.anko.windowManager
 import java.util.*
 
 class MainActivity : AppCompatActivity(),MainView{
-    override fun showErrorMode(adapter: MultiItemAdapter) {
-
-    }
-
-
     override fun initListeners() {
         //初始各种监听器
         //点击top以后跳到最顶部
@@ -54,8 +49,7 @@ class MainActivity : AppCompatActivity(),MainView{
         smartRefreshLayout.setOnRefreshListener {
                 RefreshLayout -> run{
             getTodayNews(
-                mAdapter,
-                screenHeight
+                mAdapter
             )
             smartRefreshLayout.finishRefresh(200)
 
@@ -64,8 +58,7 @@ class MainActivity : AppCompatActivity(),MainView{
         smartRefreshLayout.setOnLoadMoreListener {
                 RefreshLayout -> run {
             getTheBeforeNews(
-                mAdapter,
-                screenHeight
+                mAdapter
             )
             smartRefreshLayout.finishLoadMore(200)
         }
@@ -118,11 +111,11 @@ class MainActivity : AppCompatActivity(),MainView{
         setContentView(R.layout.activity_main)
 
         mainPresenter = MainPresenter(this,this)
-        mainPresenter.getScreenHeight(this)
+        mainPresenter.getData()
         initViews()         //初始化视图
         initListeners()    //初始化监听器
         //发送网络请求
-        getTodayNews(mAdapter,screenHeight)
+        getTodayNews(mAdapter)
 
     }
 }
